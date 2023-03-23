@@ -1,0 +1,263 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}Tài khoản{% endblock %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+    <!-- Breadcrumb Section Start -->
+    <section class="breadscrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadscrumb-contain">
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'store:index' %}">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Tài khoản</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- User Dashboard Section Start -->
+    <section class="user-dashboard-section section-b-space">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-xxl-3 col-lg-4">
+                    <div class="dashboard-left-sidebar">
+                        <div class="close-button d-flex d-lg-none">
+                            <button class="close-sidebar">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="profile-box">
+                            <div class="cover-image">
+                                <img src="{% static 'store/assets/images/inner-page/cover-img.jpg' %}" class="img-fluid blur-up lazyload"
+                                    alt="">
+                            </div>
+
+                            <div class="profile-contain">
+                                <div class="profile-image">
+                                    <div class="position-relative">
+                                        <img src="{% static 'store/assets/images/inner-page/user/1.jpg' %}"
+                                            class="blur-up lazyload update_img" alt="">
+                                        <div class="cover-icon">
+                                            <i class="fa-solid fa-pen">
+                                                <input type="file" onchange="readURL(this,0)">
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="profile-name">
+                                    <h3>{{ request.user.last_name }} {{ request.user.first_name }}</h3>
+                                    <h6 class="text-content">{{ request.user.email }}</h6>
+                                    <h6 class="text-content">{{ customer.phone_number }}</h6>
+                                    <h6 class="text-content">{{ customer.address }}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="nav nav-pills user-nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-dashboard-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-dashboard" type="button" role="tab"
+                                    aria-controls="pills-dashboard" aria-selected="true"><i data-feather="home"></i>
+                                    Tài khoản của tôi</button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-order-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
+                                    aria-selected="false"><i data-feather="shopping-bag"></i>Đơn hàng</button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="{% url 'users:logout' %}">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xxl-9 col-lg-8">
+                    <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">Show
+                        Menu</button>
+                    <div class="dashboard-right-sidebar">
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel"
+                                aria-labelledby="pills-dashboard-tab">
+                                <div class="dashboard-home">
+                                    <div class="title">
+                                        <h2>Hồ sơ của tôi</h2>
+                                        <span class="title-leaf">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="{% static 'store/assets/svg/leaf.svg' %}#leaf"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+
+                                    <div class="dashboard-user-name">
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <div class="col-md-6">
+                                                    <div class="alert alert-success">
+                                                        {{ message }}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <form class="row" method="post">
+                                        {% csrf_token %}
+                                        <div class="col-md-6">
+                                            <input class="form-control" name="first_name" type="text" placeholder="Họ">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" name="last_name" type="text" placeholder="Tên">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input class="form-control" name="email" type="text" placeholder="Địa chỉ Email">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input class="form-control" name="phone_number" type="text" placeholder="Số điện thoại">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input class="form-control" name="address" type="text" placeholder="Địa chỉ">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-success btn-animation" type="submit" value="update_account" name="btnUpdateUser">Cập nhật tài khoản</button>
+                                            <br><br>
+                                        </div>
+                                    </form>
+                                    </div>
+
+
+                                    <div class="dashboard-title">
+                                        <h3>Cập nhật mật khẩu</h3>
+                                    </div>
+                                    <form class="row" method="post">
+                                        {% csrf_token %}
+                                        <div class="col-md-12">
+                                            <input class="form-control" name="current_password" type="password" placeholder="Mật khẩu hiện tại">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" name="new_password" type="password" placeholder="Mật khẩu mới">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" name="new_password1" type="password" placeholder="Nhập lại mật khẩu mới">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-animation btn-success" name="btnUpdatePass" value="update_pass" type="submit">Đổi mật khẩu</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="pills-order" role="tabpanel"
+                                aria-labelledby="pills-order-tab">
+                                <div class="dashboard-order">
+                                    <div class="title">
+                                        <h2>Lịch sử đơn hàng</h2>
+                                        <span class="title-leaf title-leaf-gray">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="{% static 'store/assets/svg/leaf.svg' %}#leaf"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+
+                                    <div class="order-contain">
+                                        <table class="table table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Mã đơn hàng</th>
+                                                <th>Ngày đặt hàng</th>
+                                                <th>Tổng thành tiền</th>
+                                                <th>Trạng thái</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for order in orders %}
+                                            <tr>
+                                                <td>{{ order.id }}</td>
+                                                <td>{{ order.created|date:"d/m/Y"}}</td>
+                                                <td>{{ order.total|floatformat:0|intcomma }} VND</td>
+                                                <td>Đã thanh toán</td>
+                                                <td><button class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#o{{ order.id }}">Chi tiết</button></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- User Dashboard Section End -->
+{% for order_id, order_items in dict_orders.items %}
+<div class="modal fade" id="o{{ order_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Đơn hàng # {{ order_id }}</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col" style="text-align: center;">Số lượng</th>
+                            <th scope="col" style="text-align: right;">Đơn giá</th>
+                            <th scope="col" style="text-align: right;">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in order_items %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><img src="{{ i.product_image.url }}" alt="{{ i.product_name }}" style="width: 70px;"></td>
+                            <td>{{ i.product_name }}</td>
+                            <td style="text-align: center;">{{ i.quantity }}</td>
+                            <td style="text-align: right;">{{ i.price|floatformat:0|intcomma }} đ</td>
+                            <td style="text-align: right;">
+                                {% with total=i.quantity|mul:i.price %} <!--mul = multiply-->
+                                {{ total|floatformat:0|intcomma }} VND
+                                {% endwith %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr style="color: red;">
+                            <td colspan="4"></td>
+                            <td style="text-align: right;">
+                                <h5>
+                                    <strong>Tổng Tiền</strong>
+                                </h5>
+                            </td>
+                            <td style="text-align: right;">
+                                <h5>
+                                    <strong>{{ order_items.0.total_price|floatformat:0|intcomma }}</strong>
+                                </h5>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

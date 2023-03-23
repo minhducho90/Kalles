@@ -1,0 +1,138 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ search_name }}{% endblock %}
+{% block content %}
+
+    <!-- Breadcrumb Section Start -->
+    <section class="breadscrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadscrumb-contain">
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'store:index' %}">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ search_name }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Search Bar Section Start -->
+    <section class="search-section">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-8 mx-auto">
+                    <div class="title d-block text-center">
+                        <h2>Tìm kiếm sản phẩm</h2>
+                        <span class="title-leaf">
+                            <svg class="icon-width">
+                                <use xlink:href="{% static 'store/assets/svg/leaf.svg' %}#leaf"></use>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <div class="search-box">
+                        <form action="{% url 'store:search' %}" method="get" style="width: 100%">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Tìm kiếm" name="product_name" value="{{ product_name }}">
+                                <button class="btn theme-bg-color text-white m-0" type="submit"
+                                    id="button-addon1">Tìm kiếm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Search Bar Section End -->
+
+    <!-- Product Section Start -->
+    <section class="section-b-space">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div
+                        class="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                        {% for product in products %}
+                            <div>
+                            <div class="product-box-3 h-100">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{% static 'store/assets/images/cake/product/11.png' %}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {%  if products.paginator.num_pages > 1 %}
+                        <nav class="custome-pagination">
+                        <ul class="pagination justify-content-center">
+                            {%  if products.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.previous_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}" tabindex="-1" aria-disabled="true">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {%  if products.number > 5 %}
+                                <li class="page-item"><span class="page-numbers">…</span></li>
+                            {% endif %}
+
+                            {% for i in products.paginator.page_range %}
+                                {% if i > products.number|add:'-5' %}
+                                {% if i < products.number|add:'5' %}
+                                {% if i == products.number %}
+                                    <li class="page-item active disabled">
+                                        <a class="page-link" href="#">{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {%  if products.number < products.paginator.num_pages|add:'-4' %}
+                                <li class="page-item"><span class="page-numbers">…</span></li>
+                            {% endif %}
+                            {%  if products.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.next_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+{% endblock %}

@@ -1,0 +1,484 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fastkart">
+    <meta name="keywords" content="Fastkart">
+    <meta name="author" content="Fastkart">
+    <link rel="icon" href="{% static 'store/assets/images/favicon/7.png' %}" type="image/x-icon">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Qwitcher+Grypen:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'store/assets/css/vendors/bootstrap.css' %}">
+
+    <!-- wow css -->
+    <link rel="stylesheet" href="{% static 'store/assets/css/animate.min.css' %}" />
+
+    <!-- font-awesome css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'store/assets/css/vendors/font-awesome.css' %}">
+
+    <!-- feather icon css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'store/assets/css/vendors/feather-icon.css' %}">
+
+    <!-- slick css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'store/assets/css/vendors/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'store/assets/css/vendors/slick/slick-theme.css' %}">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'store/assets/css/bulk-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'store/assets/css/vendors/animate.css' %}">
+
+    <!-- Template css -->
+    <link id="color-link" rel="stylesheet" type="text/css" href="{% static 'store/assets/css/style.css' %}">
+
+    <!-- latest jquery-->
+    <script src="{% static 'store/assets/js/jquery-3.6.0.min.js' %}"></script>
+    {% block styles %}
+
+    {%  endblock %}
+</head>
+
+<body class="theme-color-5">
+
+    <!-- Loader Start -->
+    <div class="fullpage-loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Loader End -->
+
+    <!-- Header Start -->
+    <header class="">
+        <div class="top-nav top-header sticky-header">
+            <div class="container-fluid-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="navbar-top">
+                            <button class="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button"
+                                data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                                <span class="navbar-toggler-icon">
+                                    <i class="fa-solid fa-bars"></i>
+                                </span>
+                            </button>
+                            <a href="{% url 'store:index' %}" class="web-logo nav-logo">
+                                <img src="{% static 'store/assets/images/logo/6.png' %}" class="img-fluid blur-up lazyload" alt="">
+                            </a>
+
+                            <div class="header-nav-middle">
+                                <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
+                                    <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
+                                        <div class="offcanvas-header navbar-shadow">
+                                            <h5>Menu</h5>
+                                            <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="offcanvas-body">
+                                            <ul class="navbar-nav mx-auto">
+                                                <li class="nav-item">
+                                                    <a class="nav-link nav-no-dropdown" href="{% url 'store:index' %}">Trang chủ</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link nav-no-dropdown" href="{% url 'store:product_list' 'tat-ca-san-pham' %}">Sản phẩm</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link nav-no-dropdown" href="{% url 'store:contact' %}">Liên hệ</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="rightside-box">
+                                <div class="search-full">
+                                    <form action="{% url 'store:search' %}" method="get" style="width: 100%">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i data-feather="search" class="font-light"></i>
+                                        </span>
+                                        <input type="text" class="form-control search-type" placeholder="Tìm kiếm" name="product_name" value="{{ product_name }}">
+                                        <button class="btn-search" type="submit">
+                                            <i data-feather="search" class="font-light"></i>
+                                        </button>
+                                        <span class="input-group-text close-search">
+                                            <i data-feather="x" class="font-light"></i>
+                                        </span>
+                                    </div>
+                                    </form>
+                                </div>
+                                <ul class="right-side-menu">
+                                    <li class="right-side">
+                                        <div class="delivery-login-box">
+                                            <div class="delivery-icon">
+                                                <div class="search-box">
+                                                    <i data-feather="search"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="right-side">
+                                        <div class="onhover-dropdown header-badge">
+                                            <button type="button" class="btn p-0 position-relative header-wishlist">
+                                                <i data-feather="shopping-cart"></i>
+                                                <span class="position-absolute top-0 start-100 translate-middle badge">{{ cart|length }}
+                                                </span>
+                                            </button>
+                                            <div class="onhover-div">
+                                                <ul class="cart-list">
+                                                    {% for c in cart %}
+                                                        <li class="product-box-contain">
+                                                        <div class="drop-cart">
+                                                            <a href="{% url 'store:product_detail' c.product.pk %}" class="drop-image">
+                                                                <img src="{{ c.product.image.url }}"
+                                                                    class="blur-up lazyload" alt="{{ c.product.name }}">
+                                                            </a>
+
+                                                            <div class="drop-contain">
+                                                                <a href="{% url 'store:product_detail' c.product.pk %}">
+                                                                    <h5>{{ c.product.name }}</h5>
+                                                                </a>
+                                                                <h6><span>1 x</span> {{ c.product.price|floatformat:'0'|intcomma}}</h6>
+                                                                <button class="close-button close_button">
+                                                                    <i class="fa-solid fa-xmark"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                                <div class="price-box">
+                                                    <h5>Tổng thành tiền :</h5>
+                                                    <h4 class="theme-color fw-bold">{{ cart.get_total_price|floatformat:0|intcomma }} VND</h4>
+                                                </div>
+
+                                                <div class="button-group">
+                                                    <a href="{% url 'cart:cart_detail' %}" class="btn btn-sm cart-button">Giỏ hàng</a>
+                                                    <a href="{% url 'cart:checkout' %}" class="btn btn-sm cart-button theme-bg-color
+                                                    text-white">Thanh toán</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="right-side onhover-dropdown">
+                                        {% if request.user.username %}
+                                            <div class="delivery-login-box">
+                                                <div class="delivery-icon">
+                                                    <i data-feather="user"></i>
+                                                </div>
+                                                <div class="delivery-detail">
+                                                    <h6>Xin chào,</h6>
+                                                    <h5>{{ request.user.last_name }} {{ request.user.first_name }}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{% url 'users:my-account' %}">Tài khoản của tôi </a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="{% url 'users:logout' %}">Đăng xuất</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {% else %}
+                                            <div class="delivery-login-box">
+                                            <div class="delivery-icon">
+                                                <i data-feather="user"></i>
+                                            </div>
+                                            <div class="delivery-detail">
+                                                <h5>Tài khoản</h5>
+                                            </div>
+                                        </div>
+                                            <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{% url 'users:login' %}">Đăng nhập</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="{% url 'users:register' %}">Đăng ký</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="{% url 'users:for_got_password' %}">Quên mật khẩu?</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- mobile fix menu start -->
+    <div class="mobile-menu d-md-none d-block mobile-cart">
+        <ul>
+            <li class="active">
+                <a href="index.html">
+                    <i class="iconly-Home icli"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li class="mobile-category">
+                <a href="javascript:void(0)">
+                    <i class="iconly-Category icli js-link"></i>
+                    <span>Category</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="search.html" class="search-box">
+                    <i class="iconly-Search icli"></i>
+                    <span>Search</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="wishlist.html" class="notifi-wishlist">
+                    <i class="iconly-Heart icli"></i>
+                    <span>My Wish</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="cart.html">
+                    <i class="iconly-Bag-2 icli fly-cate"></i>
+                    <span>Cart</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile fix menu end -->
+    
+    {% block content %}
+
+    {%  endblock %}
+    
+
+    <!-- Footer Section Start -->
+    <footer class="section-t-space footer-section-2 footer-color-3">
+        <div class="container-fluid-lg">
+            <div class="main-footer">
+                <div class="row g-md-4 gy-sm-5">
+                    <div class="col-xxl-5 col-xl-4 col-sm-6">
+                        <a href="index.html" class="foot-logo theme-logo">
+                            <img src="{% static 'store/assets/images/logo/4.png' %}" class="img-fluid blur-up lazyload" alt="">
+                        </a>
+                        <p class="information-text information-text-2">Ra đời từ ý tưởng tạo nên sự khác biệt, Fastkart đã giữ vững và phát triển trở thành vị trí hàng đầu trong thị trường nội thất Việt Nam. Đến nay, Fastkart đã có nhiều cửa hàng quy mô và chuyên nghiệp tại các thành phố lớn là Hà Nội và TP.HCM, Bình Dương.</p>
+                        <ul class="social-icon">
+                            <li class="light-bg">
+                                <a href="https://www.facebook.com/" class="footer-link-color">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li class="light-bg">
+                                <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin"
+                                    class="footer-link-color">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                            </li>
+                            <li class="light-bg">
+                                <a href="https://twitter.com/i/flow/login" class="footer-link-color">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="light-bg">
+                                <a href="https://www.instagram.com/" class="footer-link-color">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="light-bg">
+                                <a href="https://in.pinterest.com/" class="footer-link-color">
+                                    <i class="fab fa-pinterest-p"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xxl-2 col-xl-4 col-sm-6">
+                        <div class="footer-title">
+                            <h4 class="text-white">Liên kết hữu ích</h4>
+                        </div>
+                        <ul class="footer-list footer-list-light footer-contact">
+                            <li>
+                                <a href="{% url 'store:contact' %}" class="light-text">Liên hệ</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'store:product_list' 'tat-ca-san-pham'%}" class="light-text">Sản phẩm</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'cart:cart_detail' %}" class="light-text">Giỏ hàng</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xxl-2 col-xl-4 col-sm-6">
+                        <div class="footer-title">
+                            <h4 class="text-white">Danh mục sản phẩm</h4>
+                        </div>
+                        <ul class="footer-list footer-list-light footer-contact">
+
+                            <li>
+                                <a href="/subcategory/sofa/" class="light-text">Sofa</a>
+                            </li>
+                            <li>
+                                <a href="/subcategory/sofa-goc/" class="light-text">Sofa Góc</a>
+                            </li>
+                            <li>
+                                <a href="/subcategory/ghe-thu-gian/" class="light-text">Ghế thư giãn</a>
+                            </li>
+                            <li>
+                                <a href="/subcategory/ban-lam-viec/" class="light-text">Bàn làm việc</a>
+                            </li>
+                            <li>
+                                <a href="/subcategory/ngoai-that/" class="light-text">Ngoại thất</a>
+                            </li>
+                            <li>
+                                <a href="/subcategory/ban-an/" class="light-text">Bàn ăn</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xxl-3 col-xl-4 col-sm-6">
+                        <div class="footer-title">
+                            <h4 class="text-white">FastKart</h4>
+                        </div>
+                        <ul class="footer-address footer-contact">
+                            <li>
+                                <a href="javascript:void(0)" class="light-text">
+                                    <div class="inform-box flex-start-box">
+                                        <i data-feather="map-pin"></i>
+                                        <p>Công viên Lê Thị Riêng, Q. Tân Bình, TP. HCM</p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" class="light-text">
+                                    <div class="inform-box">
+                                        <i data-feather="phone"></i>
+                                        <p>Hotline: 123456890</p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" class="light-text">
+                                    <div class="inform-box">
+                                        <i data-feather="mail"></i>
+                                        <p>Email: info@Fastkart.com</p>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-footer sub-footer-lite section-b-space section-t-space">
+                <div class="left-footer">
+                    <p class="light-text">2023 Copyright By Fastkart</p>
+                </div>
+
+                <ul class="payment-box">
+                    <li>
+                        <img src="{% static 'store/assets/images/icon/paymant/visa.png' %}" class="blur-up lazyload" alt="">
+                    </li>
+                    <li>
+                        <img src="{% static 'store/assets/images/icon/paymant/discover.png' %}" alt="" class="blur-up lazyload">
+                    </li>
+                    <li>
+                        <img src="{% static 'store/assets/images/icon/paymant/american.png' %}" alt="" class="blur-up lazyload">
+                    </li>
+                    <li>
+                        <img src="{% static 'store/assets/images/icon/paymant/master-card.png' %}" alt="" class="blur-up lazyload">
+                    </li>
+                    <li>
+                        <img src="{% static 'store/assets/images/icon/paymant/giro-pay.png' %}" alt="" class="blur-up lazyload">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Tap to top start -->
+    <div class="theme-option">
+        <div class="back-to-top">
+            <a id="back-to-top" href="#">
+                <i class="fas fa-chevron-up"></i>
+            </a>
+        </div>
+    </div>
+    <!-- Tap to top end -->
+
+    <!-- Bg overlay Start -->
+    <div class="bg-overlay"></div>
+    <!-- Bg overlay End -->
+
+    <!-- jquery ui-->
+    <script src="{% static 'store/assets/js/jquery-ui.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'store/assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'store/assets/js/bootstrap/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'store/assets/js/bootstrap/popper.min.js' %}"></script>
+
+    <!-- feather icon js-->
+    <script src="{% static 'store/assets/js/feather/feather.min.js' %}"></script>
+    <script src="{% static 'store/assets/js/feather/feather-icon.js' %}"></script>
+
+    <!-- Lazyload Js -->
+    <script src="{% static 'store/assets/js/lazysizes.min.js' %}"></script>
+
+    <!-- Slick js-->
+    <script src="{% static 'store/assets/js/slick/slick.js' %}"></script>
+    <script src="{% static 'store/assets/js/slick/slick-animation.min.js' %}"></script>
+    <script src="{% static 'store/assets/js/slick/custom_slick.js' %}"></script>
+
+    {% block scripts %}
+
+    {%  endblock %}
+    <!-- Auto Height Js -->
+    <script src="{% static 'store/assets/js/auto-height.js' %}"></script>
+
+    <!-- WOW js -->
+    <script src="{% static 'store/assets/js/wow.min.js' %}"></script>
+    <script src="{% static 'store/assets/js/custom-wow.js' %}"></script>
+
+    <!-- script js -->
+    <script src="{% static 'store/assets/js/script.js' %}"></script>
+</body>
+
+</html>

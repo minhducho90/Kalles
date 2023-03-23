@@ -1,0 +1,280 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Home | Trang chủ{% endblock %}
+{% block content %}
+    <!-- Home Section Start -->
+    <!-- Home Section Start -->
+    <section class="home-section pt-2 ratio_50">
+        <div class="container-fluid-lg">
+            <div class="row g-4">
+                <div class="col-xl-9 col-lg-8 ratio_50_1">
+                    <div class="home-contain furniture-contain-2">
+                        <img src="{% static 'store/assets/images/furniture/banner/1.jpg' %}" class="bg-img blur-up lazyload" alt="">
+                        <div class="home-detail p-top-left mend-auto w-100">
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 d-lg-inline-block d-none">
+                    <div class="home-contain h-100 home-furniture">
+                        <img src="{% static 'store/assets/images/furniture/banner/2.png' %}" class="bg-img blur-up lazyload" alt="">
+                        <div class="home-detail p-top-left home-p-sm feature-detail mend-auto">
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Home Section End -->
+    <!-- Home Section End -->
+
+    <!-- Category Section Start -->
+    <section>
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="slider-9">
+                        {% for sub in sub_cats %}
+                            <div>
+                                <a href="{% url 'store:product_list' sub.slug %}" class="category-box category-dark wow fadeInUp">
+                                    <div>
+                                        <h5>{{ sub.name }}</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Category Section End -->
+
+    <!-- Deal Section Start -->
+    <section class="product-section product-section-3">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Sản phẩm bán chạy</h2>
+            </div>
+            <div class="row g-sm-4 g-3">
+                <div class="col-xxl-12 ratio_110">
+                    <div class="slider-6 img-slider">
+                        {% for product in best_sale %}
+                            <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Section End -->
+
+    <!-- Deal Section Start -->
+    <section class="product-section product-section-3">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Phòng Khách</h2>
+            </div>
+            <div class="row g-sm-4 g-3 section-b-space">
+                <div class="col-xxl-12 ratio_110">
+                    <div class="slider-6 img-slider">
+                        {% for product in pk_products %}
+                            <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Section End -->
+    <!-- Deal Section Start -->
+    <section class="product-section product-section-3">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Phòng ăn</h2>
+            </div>
+            <div class="row g-sm-4 g-3 section-b-space">
+                <div class="col-xxl-12 ratio_110">
+                    <div class="slider-6 img-slider">
+                        {% for product in pa_products %}
+                            <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Section End -->
+    <!-- Deal Section Start -->
+    <section class="product-section product-section-3">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Bàn làm việc</h2>
+            </div>
+            <div class="row g-sm-4 g-3 section-b-space">
+                <div class="col-xxl-12 ratio_110">
+                    <div class="slider-6 img-slider">
+                        {% for product in blv_products %}
+                            <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Section End -->
+    <!-- Deal Section Start -->
+    <section class="product-section product-section-3">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Ngoại thất</h2>
+            </div>
+            <div class="row g-sm-4 g-3 section-b-space">
+                <div class="col-xxl-12 ratio_110">
+                    <div class="slider-6 img-slider">
+                        {% for product in nt_products %}
+                            <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Section End -->
+
+    <!-- Newsletter Section Start -->
+    <section class="newsletter-section section-b-space">
+        <div class="container-fluid-lg">
+            <div class="newsletter-box newsletter-box-2">
+                <div class="newsletter-contain py-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xxl-4 col-lg-5 col-md-7 col-sm-9 offset-xxl-2 offset-md-1">
+                                <div class="newsletter-detail">
+                                    <h2>Đăng ký nhận khuyến mãi</h2>
+                                    <h5>Giảm giá 100.000 VND cho khách hàng mới</h5>
+                                    <div class="input-box">
+                                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                                            placeholder="Enter Your Email">
+                                        <i class="fa-solid fa-envelope arrow"></i>
+                                        <button class="sub-btn  btn-animation">
+                                            <span class="d-sm-block d-none">Đăng ký</span>
+                                            <i class="fa-solid fa-arrow-right icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Newsletter Section End -->
+{% endblock %}

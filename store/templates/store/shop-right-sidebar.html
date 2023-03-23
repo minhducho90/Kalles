@@ -1,0 +1,193 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ sub_name }}{% endblock %}
+{% block content %}
+    <!-- Breadcrumb Section Start -->
+    <section class="breadscrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadscrumb-contain">
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'store:index' %}">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ sub_name }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shop Section Start -->
+    <section class="section-b-space shop-section">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-custome-9">
+                    <div class="show-button">
+                        <div class="top-filter-menu">
+                            <div class="category-dropdown">
+                                <form method="GET" style="display: flex;">
+                                    <div class="dropdown">
+                                        <div class="form-group">
+                                            <input type="number" name="from_price" step="5000" min="10000" class="form-control" value="{{ from_price }}" placeholder="Từ giá">
+                                        </div>
+                                    </div>
+                                    <div class="dropdown">
+                                        <div class="form-group">
+                                            <input type="number" name="to_price" step="5000" min="100000" class="form-control" value="{{ to_price }}" placeholder="Đến giá">
+                                        </div>
+                                    </div>
+                                    <div class="dropdown">
+                                    <button type="submit" class="btn btn-md bg-success cart-button text-white">Lọc</button>
+                                    <input type="hidden" name="product_name" value="{{ product_name }}">
+                                </div>
+                                </form>
+                            </div>
+                            <div class="grid-option d-none d-md-block">
+                                <ul>
+                                    <li class="three-grid">
+                                        <a href="javascript:void(0)">
+                                            <img src="{% static 'store/assets/svg/grid-3.svg' %}" class="blur-up lazyload" alt="">
+                                        </a>
+                                    </li>
+                                    <li class="grid-btn d-xxl-inline-block d-none active">
+                                        <a href="javascript:void(0)">
+                                            <img src="{% static 'store/assets/svg/grid-4.svg' %}"
+                                                class="blur-up lazyload d-lg-inline-block d-none" alt="">
+                                            <img src="{% static 'store/assets/svg/grid.svg' %}"
+                                                class="blur-up lazyload img-fluid d-lg-none d-inline-block" alt="">
+                                        </a>
+                                    </li>
+                                    <li class="list-btn">
+                                        <a href="javascript:void(0)">
+                                            <img src="{% static 'store/assets/svg/list.svg' %}" class="blur-up lazyload" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                        {% for product in products %}
+                            <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {%  if products.paginator.num_pages > 1 %}
+                    <nav class="custome-pagination">
+                        <ul class="pagination justify-content-center">
+                            {%  if products.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.previous_page_number}}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% elif request.GET.from_price %}&from_price={{ request.GET.from_price}}&to_price={{ request.GET.to_price }}&product_name={{ request.GET.product_name }}{% endif %}" tabindex="-1" aria-disabled="true">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {%  if products.number > 5 %}
+                                <li class="page-item"><span class="page-numbers">…</span></li>
+                            {% endif %}
+
+                            {% for i in products.paginator.page_range %}
+                                {% if i > products.number|add:'-5' %}
+                                {% if i < products.number|add:'5' %}
+                                {% if i == products.number %}
+                                    <li class="page-item active disabled">
+                                        <a class="page-link" href="#">{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% elif request.GET.from_price %}&from_price={{ request.GET.from_price}}&to_price={{ request.GET.to_price }}&product_name={{ request.GET.product_name }}{% endif %}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {%  if products.number < products.paginator.num_pages|add:'-4' %}
+                                <li class="page-item"><span class="page-numbers">…</span></li>
+                            {% endif %}
+                            {%  if products.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.next_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% elif request.GET.from_price %}&from_price={{ request.GET.from_price}}&to_price={{ request.GET.to_price }}&product_name={{ request.GET.product_name }}{% endif %}">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+
+                <div class="col-custome-3">
+                    <div class="left-box right-box wow fadeInUp">
+                        <div class="shop-left-sidebar shop-right-sidebar">
+                            <div class="back-button">
+                                <h3><i class="fa-solid fa-arrow-left"></i> Back</h3>
+                            </div>
+                            <div class="accordion custome-accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            <span>Danh mục sản phẩm</span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne">
+                                        <div class="accordion-body">
+                                            <ul class="category-list custom-padding custom-height">
+                                                {% for sub in sub_cats %}
+                                                <li>
+                                                    <a class="nav-link nav-no-dropdown link-dark" href="{% url 'store:product_list' sub.slug %}">{{ sub.name }}</a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+{% endblock %}
+{% block scripts %}
+    <!-- Price Range Js -->
+    <script src="{% static 'store/assets/js/ion.rangeSlider.min.js' %}"></script>
+
+    <!-- Quantity js -->
+    <script src="{% static 'store/assets/js/quantity-2.js' %}"></script>
+{% endblock %}

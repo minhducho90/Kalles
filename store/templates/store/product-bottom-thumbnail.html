@@ -1,0 +1,208 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+
+    <!-- Breadcrumb Section Start -->
+    <section class="breadscrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadscrumb-contain">
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'store:index' %}">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+
+                                <li class="breadcrumb-item active">{{ product.name }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Left Sidebar Start -->
+    <section class="product-section">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-xxl-9 col-xl-8 col-lg-7 wow fadeInUp">
+                    <div class="row g-4">
+                        <div class="col-xl-6 wow fadeInUp">
+                            <div class="product-left-box">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <div class="product-main-1 no-arrow">
+                                            <div>
+                                                <div class="slider-image">
+                                                    <img src="{{ product.image.url }}" id="img-1"
+                                                        data-zoom-image="{{ product.image.url }}"
+                                                        class="img-fluid image_zoom_cls-0 blur-up lazyload" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="right-box-contain">
+                                <form method="POST" action="{% url 'cart:buy_now' product.pk %}">
+                                    {% csrf_token %}
+                                    <h2 class="name">{{ product.name }}</h2>
+                                    <div class="price-rating">
+                                        <h3 class="theme-color price">{{ product.price|floatformat:'0'|intcomma}} VND <del class="text-content">{{ product.price_origin|floatformat:'0'|intcomma}} VND</del></h3>
+                                    </div>
+
+                                    <div class="note-box product-packege">
+                                        <div class="cart_qty qty-box product-qty">
+                                            <div class="input-group">
+                                                <button type="button" class="qty-left-minus" data-type="minus"
+                                                    data-field="">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                                <input class="form-control input-number qty-input" type="text"
+                                                    name="quantity" value="1">
+                                                <button type="button" class="qty-right-plus" data-type="plus" data-field="">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-md bg-dark cart-button text-white w-100" type="submit">Thêm vào giỏ hàng</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="product-section-box">
+                                <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                                            data-bs-target="#description" type="button" role="tab"
+                                            aria-controls="description" aria-selected="true">Mô tả</button>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content custom-tab" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                        aria-labelledby="description-tab">
+                                        <div class="product-description">
+                                            {{ product.content|safe }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
+                    <div class="right-sidebar-box">
+                        <!-- Trending Product -->
+                        <div class="pt-25">
+                            <div class="category-menu">
+                                <h3>Sản phẩm nổi bật</h3>
+
+                                <ul class="product-list product-right-sidebar border-0 p-0">
+                                    {% for product in random_product %}
+                                        <li>
+                                            <div class="offer-product">
+                                                <a href="{% url 'store:product_detail' product.pk %}" class="offer-image">
+                                                    <img src="{{ product.image.url }}"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                </a>
+
+                                                <div class="offer-detail">
+                                                    <div>
+                                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                                            <h6 class="name">{{ product.name }}</h6>
+                                                        </a>
+                                                        <h6 class="theme-color price">{{ product.price|floatformat:'0'|intcomma}} VND <del class="text-content">{{ product.price_origin|floatformat:'0'|intcomma}} VND</del></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Banner Section -->
+                        <div class="ratio_156 pt-25">
+                            <div class="home-contain">
+                                <img src="{% static 'store/assets/images/vegetable/banner/8.jpg' %}" class="bg-img blur-up lazyload"
+                                    alt="">
+                                <div class="home-detail p-top-left home-p-medium">
+                                    <div>
+                                        <h6 class="text-yellow home-banner">Seafood</h6>
+                                        <h3 class="text-uppercase fw-normal"><span
+                                                class="theme-color fw-bold">Freshes</span> Products</h3>
+                                        <h3 class="fw-light">every hour</h3>
+                                        <button onclick="location.href = 'shop-left-sidebar.html';"
+                                            class="btn btn-animation btn-md fw-bold mend-auto">Mua ngay <i
+                                                class="fa-solid fa-arrow-right icon"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Left Sidebar End -->
+
+    <!-- Releted Product Section Start -->
+    <section class="product-list-section section-b-space">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Có thể bạn thích</h2>
+                <span class="title-leaf">
+                    <svg class="icon-width">
+                        <use xlink:href="{% static 'store/assets/svg/leaf.svg' %}#leaf"></use>
+                    </svg>
+                </span>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="slider-6_1 product-wrapper">
+                        {% for product in product_related %}
+                        <div>
+                            <div class="product-box-3 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <img src="{{ product.image.url }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <a href="{% url 'store:product_detail' product.pk %}">
+                                            <h5 class="name">{{ product.name }}</h5>
+                                        </a>
+                                        <h5 class="price"><span class="theme-color">{{ product.price|floatformat:'0'|intcomma}} VND</span> <del>{{ product.price_origin|floatformat:'0'|intcomma}} VND</del>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Releted Product Section End -->
+
+{% endblock %}
